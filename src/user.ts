@@ -1,6 +1,7 @@
 // @ts-nocheck
-import cds from "@sap/cds";
 import type { JWTVerifyResult } from "jose";
+
+const cds = require("@sap/cds");
 
 
 
