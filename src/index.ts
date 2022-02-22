@@ -6,6 +6,7 @@ import { VerifyConfig } from "./interface";
 import { DefaultRoleExtractor } from "./roles";
 import { JwtUser } from "./user";
 
+
 const middleware = async (req: Request, res: Response, next: NextFunction) => {
 
   try {
@@ -57,5 +58,7 @@ const middleware = async (req: Request, res: Response, next: NextFunction) => {
   }
 
 };
+
+
 
 export = middleware
