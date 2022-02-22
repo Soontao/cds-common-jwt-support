@@ -33,4 +33,9 @@ service IndexService {
   action freeAction001() returns MetricReponse;
   action freeAction002() returns MetricReponse;
 
+  function userInfo() returns {
+    id  : String;
+    roles : array of String;
+  }
+
 }

@@ -3,6 +3,7 @@ import type { NextFunction, Request, Response } from "express";
 import { errors, jwtVerify } from "jose";
 import { UnauthorizedError } from "./errors";
 import { VerifyConfig } from "./interface";
+import { DefaultRoleExtractor } from "./roles";
 import { JwtUser } from "./user";
 
 const middleware = async (req: Request, res: Response, next: NextFunction) => {
@@ -23,8 +24,9 @@ const middleware = async (req: Request, res: Response, next: NextFunction) => {
 
     req.user = new JwtUser({
       id: jwt.payload?.sub ?? "unknown-authenticated-user",
-      jwt: jwt,
-      roles: config?.roleExtractor?.(jwt) ?? new Set()
+      jwt,
+      req,
+      roles: (config?.roleExtractor ?? DefaultRoleExtractor)(jwt)
     });
 
     return next();

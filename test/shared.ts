@@ -8,22 +8,22 @@ export const baseConfig = {
   },
 };
 
-export const buildAuthConfig = async (tokenPayload = { sub: "test-user" }) => {
+export const buildAuthConfig = async (tokenPayload?: jose.JWTPayload, validity?: number) => {
   return {
     ...baseConfig,
     headers: {
-      Authorization: `Bearer ${await createAuthToken(tokenPayload)}`
+      Authorization: `Bearer ${await createAuthToken(tokenPayload, validity)}`
     }
   };
 };
 
 
-export const createAuthToken = async (payload = { sub: "test-user" }) => {
+export const createAuthToken = async (payload: jose.JWTPayload = { sub: "test-user" }, validity = 60) => {
   return new jose
     .SignJWT(payload)
     .setIssuedAt()
     .setProtectedHeader({ alg: "PS256" })
-    .setExpirationTime(Math.floor(Date.now() / 1000) + 60) // 60 seconds exp
+    .setExpirationTime(Math.floor(Date.now() / 1000) + validity) // 60 seconds exp
     .sign(await getPrivateKey());
 };
 

@@ -12,6 +12,9 @@ export interface JwtUserOptions {
   roles?: Set<string>;
 }
 
+/**
+ * cds-common-jwt User
+ */
 export class JwtUser extends cds.User {
 
   #jwt: JWTVerifyResult;

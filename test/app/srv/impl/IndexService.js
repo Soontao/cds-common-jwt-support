@@ -31,4 +31,8 @@ module.exports = async (srv) => {
     return { "service": "CDS", name: "freeAction001" };
   });
 
+  srv.on("userInfo", (req) => {
+    return { id: req.user.id, roles: Object.keys(req.user._roles) };
+  });
+
 };
