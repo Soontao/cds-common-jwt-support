@@ -93,7 +93,9 @@
           "cds",
           "camelcase",
           "mutex",
-          "axios"
+          "axios",
+          "jose",
+          "alg"
         ]
       }
     ]

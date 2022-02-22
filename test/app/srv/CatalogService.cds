@@ -6,6 +6,7 @@ using {
   cuid
 } from '@sap/cds/common';
 
+@requires : 'authenticated-user'
 service CatalogService @(path : '/browse') {
 
   entity Books {

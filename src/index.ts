@@ -1,26 +1,30 @@
 // @ts-nocheck
 import type { NextFunction, Request, Response } from "express";
 import { errors, jwtVerify } from "jose";
-import { store } from "./config";
 import { UnauthorizedError } from "./errors";
+import { VerifyConfig } from "./interface";
 import { JwtUser } from "./user";
 
 const middleware = async (req: Request, res: Response, next: NextFunction) => {
 
   try {
-    if (store.initialized === false) {
+    const config: VerifyConfig = req.app.get("cds-common-jwt-config");
+
+    if (config === undefined) {
       throw new UnauthorizedError("the configuration of cds-common-jwt-support is not setup");
     }
-    if (!req.headers?.authorization?.startsWith("Bearer")) {
+
+    if (!req.headers?.authorization?.startsWith("Bearer ")) {
       throw new UnauthorizedError("Bearer token not found");
     }
-    const token = req.headers.authorization.substr(7);
-    const jwt = await jwtVerify(token, store.config.key, store.config.options);
+
+    const token = req.headers.authorization.substring(7);
+    const jwt = await jwtVerify(token, config.key, config.options);
 
     req.user = new JwtUser({
-      id: result.payload.sub,
+      id: jwt.payload?.sub ?? "unknown-authenticated-user",
       jwt: jwt,
-      roles: store.config?.roleExtractor?.(jwt) ?? new Set()
+      roles: config?.roleExtractor?.(jwt) ?? new Set()
     });
 
     return next();

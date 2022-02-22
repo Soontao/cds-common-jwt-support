@@ -12,6 +12,7 @@
     "experimentalDecorators": true,
     "declaration": true,
     "strict": true,
+    "allowJs": true,
     "lib": [
       "ES6",
       "DOM",

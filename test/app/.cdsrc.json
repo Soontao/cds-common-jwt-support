@@ -1,0 +1,7 @@
+{
+  "requires": {
+    "auth": {
+      "impl": "../../src/index.ts"
+    }
+  }
+}

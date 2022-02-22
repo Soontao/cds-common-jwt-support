@@ -16,7 +16,7 @@ export class JwtUser extends cds.User {
 
   #jwt: JWTVerifyResult;
 
-  #roles: Set<string>;
+  #roles: { [role: string]: boolean };
 
   #req: import("express").Request;
 
@@ -29,6 +29,10 @@ export class JwtUser extends cds.User {
     if (options.roles !== undefined) {
       this.#roles = options.roles;
     }
+    if (this.id !== undefined && this.id?.length > 0) {
+      this.#roles["identified-user"] = true;
+    }
+    this.#roles["authenticated-user"] = true;
   }
 
   public get _jwt() {
@@ -44,7 +48,7 @@ export class JwtUser extends cds.User {
   }
 
   public is(role: string) {
-    return this.#roles.has(role);
+    return this.#roles?.[role] === true;
   }
 
 }
