@@ -6,7 +6,7 @@
 [![codecov](https://codecov.io/gh/Soontao/cds-common-jwt-support/branch/main/graph/badge.svg?token=LKyd87mOZw)](https://codecov.io/gh/Soontao/cds-common-jwt-support)
 
 
-## Get Start
+## Get Started
 
 > simply integrate the `cds-common-jwt-support` to you CAP nodejs project
 
@@ -50,3 +50,7 @@ module.exports = cds.server;
   }
 }
 ```
+
+## [CHANGELOG](./CHANGELOG.md)
+
+## [LICENSE](./LICENSE)

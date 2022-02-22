@@ -9,7 +9,7 @@ export interface JwtUserOptions {
   id: string;
   jwt: JWTVerifyResult;
   req?: import("express").Request;
-  roles?: Set<string>;
+  roles?: { [role: string]: boolean };
 }
 
 /**
