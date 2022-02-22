@@ -4,6 +4,7 @@ import { errors, jwtVerify } from "jose";
 import { UnauthorizedError } from "./errors";
 import { VerifyConfig } from "./interface";
 import { DefaultRoleExtractor } from "./roles";
+import { DefaultTenantExtractor } from "./tenant";
 import { JwtUser } from "./user";
 
 
@@ -27,6 +28,8 @@ const middleware = async (req: Request, res: Response, next: NextFunction) => {
       id: jwt.payload?.sub ?? "unknown-authenticated-user",
       jwt,
       req,
+      attr: {},
+      tenant: (config?.tenantExtractor ?? DefaultTenantExtractor)(jwt),
       roles: (config?.roleExtractor ?? DefaultRoleExtractor)(jwt)
     });
 

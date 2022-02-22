@@ -34,8 +34,9 @@ service IndexService {
   action freeAction002() returns MetricReponse;
 
   function userInfo() returns {
-    id  : String;
-    roles : array of String;
+    id     : String;
+    roles  : array of String;
+    tenant : String;
   }
 
 }

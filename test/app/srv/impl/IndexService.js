@@ -32,7 +32,11 @@ module.exports = async (srv) => {
   });
 
   srv.on("userInfo", (req) => {
-    return { id: req.user.id, roles: Object.keys(req.user._roles) };
+    return {
+      id: req.user.id,
+      roles: Object.keys(req.user._roles),
+      tenant: req.tenant
+    };
   });
 
 };

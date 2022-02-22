@@ -79,5 +79,21 @@ describe("Feature Toggle Test Suite", () => {
     ]);
   });
 
+  it("should support extract tenant number", async () => {
+    const { data, status } = await axios.get(`/index/userInfo()`,
+      await buildAuthConfig({ sub: "Theo Sun", roles: {}, tenant: 123 })
+    );
+    expect(status).toBe(200);
+    expect(data.tenant).toBe("123");
+  });
+
+  it("should support extract tenant string", async () => {
+    const { data, status } = await axios.get(`/index/userInfo()`,
+      await buildAuthConfig({ sub: "Theo Sun", roles: {}, tenant: "tenant-1" })
+    );
+    expect(status).toBe(200);
+    expect(data.tenant).toBe("tenant-1");
+  });
+
 
 });

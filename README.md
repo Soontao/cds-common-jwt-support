@@ -1,6 +1,6 @@
 # cds common jwt support
 
-> support `jwt` without xsuaa ans xssec, and give user much more features with `jose`
+> support `jwt` without xsuaa ans xssec, and give user much more features with [`jose`](https://github.com/panva/jose)
 
 [![node-test](https://github.com/Soontao/cds-common-jwt-support/actions/workflows/nodejs.yml/badge.svg)](https://github.com/Soontao/cds-common-jwt-support/actions/workflows/nodejs.yml)
 [![codecov](https://codecov.io/gh/Soontao/cds-common-jwt-support/branch/main/graph/badge.svg?token=LKyd87mOZw)](https://codecov.io/gh/Soontao/cds-common-jwt-support)
@@ -32,7 +32,7 @@ MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA7g4mOYr136bOzOB4hd+e
 
 cds.on("bootstrap", async (app) => {
   app.set("cds-common-jwt-config", {
-    key: jose.importSPKI(publicKey, "PS256")
+    key: await jose.importSPKI(publicKey, "PS256")
   });
 });
 

@@ -9,8 +9,6 @@ import { RolesExtractor } from "./interface";
  */
 export const DefaultRoleExtractor: RolesExtractor = (jwt) => {
   switch (typeof jwt?.payload?.roles) {
-    case "undefined":
-      return {};
     case "object":
       if (jwt.payload.roles instanceof Array) {
         // @ts-ignore
