@@ -4,6 +4,7 @@
     "newLine": "lf",
     "target": "ES2019",
     "module": "CommonJS",
+    "skipLibCheck": true,
     "sourceMap": true,
     "outDir": "lib",
     "esModuleInterop": true,
