@@ -63,5 +63,11 @@ const middleware = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 
+function configureJwt(app: import("express").Application, config: VerifyConfig) {
+  app.set("cds-common-jwt-config", config);
+  return app;
+};
+
+middleware.configureJwt = configureJwt;
 
 export = middleware

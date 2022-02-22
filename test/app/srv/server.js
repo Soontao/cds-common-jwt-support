@@ -1,9 +1,10 @@
 const cds = require("@sap/cds");
 const { getPublicKey } = require("../../shared");
+const { configureJwt } = require("../../../src");
 
 cds.on("bootstrap", async (app) => {
-  app.set("cds-common-jwt-config", {
-    key: await getPublicKey()
+  configureJwt(app, {
+    key: await getPublicKey(),
   });
 });
 
