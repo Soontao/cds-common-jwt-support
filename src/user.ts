@@ -4,7 +4,7 @@ import type { JWTVerifyResult } from "jose";
 const cds = require("@sap/cds");
 
 export interface JwtUserOptions {
-  id: string;
+  id: string | undefined;
   jwt: JWTVerifyResult;
   req?: import("express").Request;
   attr?: any;
@@ -77,3 +77,5 @@ export class JwtUser extends cds.User {
   }
 
 }
+
+

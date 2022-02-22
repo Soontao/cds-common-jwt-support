@@ -1,5 +1,5 @@
 import { isPlainObject } from "@newdash/newdash/isPlainObject";
-import { RolesExtractor } from "./interface";
+import { RolesExtractor, TenantExtractor, UserIdExtractor } from "./interface";
 
 /**
  * extract custom `roles` claims as roles
@@ -24,4 +24,32 @@ export const DefaultRoleExtractor: RolesExtractor = (jwt) => {
     default:
       return {};
   }
+};
+
+
+export const DefaultTenantExtractor: TenantExtractor = (jwt) => {
+  switch (typeof jwt?.payload?.tenant) {
+    case "number":
+      return String(jwt.payload.tenant);
+    case "string":
+      return jwt.payload.tenant;
+    default:
+      return null;
+  }
+};
+
+
+export const DefaultUserIdExtractorBuilder = (key: string): UserIdExtractor => {
+  return (jwt) => {
+    const userId = jwt?.payload?.[key];
+    if(userId === undefined) {
+      return userId;
+    }
+    if (typeof userId === "string") {
+      return userId;
+    }
+    if (typeof userId === "number") {
+      return String(userId);
+    }
+  };
 };

@@ -2,7 +2,7 @@
 import cds from "@sap/cds/lib";
 import { baseConfig, buildAuthConfig } from "./shared";
 
-describe("Feature Toggle Test Suite", () => {
+describe("CDS Common JWT Test Suite", () => {
 
   const axios = cds.test(".").in(__dirname, "app");
 

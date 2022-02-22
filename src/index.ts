@@ -1,10 +1,8 @@
-// @ts-nocheck
 import type { NextFunction, Request, Response } from "express";
 import { errors, jwtVerify } from "jose";
 import { UnauthorizedError } from "./errors";
+import { DefaultRoleExtractor, DefaultTenantExtractor, DefaultUserIdExtractorBuilder } from "./extractors";
 import { VerifyConfig } from "./interface";
-import { DefaultRoleExtractor } from "./roles";
-import { DefaultTenantExtractor } from "./tenant";
 import { JwtUser } from "./user";
 
 
@@ -24,8 +22,18 @@ const middleware = async (req: Request, res: Response, next: NextFunction) => {
     const token = req.headers.authorization.substring(7);
     const jwt = await jwtVerify(token, config.key, config.options);
 
+    let userIdExtractor = DefaultUserIdExtractorBuilder("sub");
+
+    if (typeof config.userIdExtractor === "string") {
+      userIdExtractor = DefaultUserIdExtractorBuilder(config.userIdExtractor);
+    }
+    if (typeof config.userIdExtractor === "function") {
+      userIdExtractor = config.userIdExtractor;
+    }
+
+    // @ts-ignore
     req.user = new JwtUser({
-      id: jwt.payload?.sub ?? "unknown-authenticated-user",
+      id: userIdExtractor(jwt),
       jwt,
       req,
       attr: {},
