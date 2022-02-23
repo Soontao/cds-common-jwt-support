@@ -1,15 +1,16 @@
 import type { NextFunction, Request, Response } from "express";
 import { errors, jwtVerify } from "jose";
+import { EXPRESS_APP_COMMON_JWT_CONFIG_KEY } from "./constants";
 import { UnauthorizedError } from "./errors";
 import { DefaultRoleExtractor, DefaultTenantExtractor, DefaultUserIdExtractorBuilder } from "./extractors";
-import { VerifyConfig } from "./interface";
+import { CommonJwtConfig } from "./interface";
 import { JwtUser } from "./user";
 
 
 const middleware = async (req: Request, res: Response, next: NextFunction) => {
 
   try {
-    const config: VerifyConfig = req.app.get("cds-common-jwt-config");
+    const config: CommonJwtConfig = req?.app?.get(EXPRESS_APP_COMMON_JWT_CONFIG_KEY);
 
     if (config === undefined) {
       throw new UnauthorizedError("the configuration of cds-common-jwt-support is not setup");
@@ -22,7 +23,7 @@ const middleware = async (req: Request, res: Response, next: NextFunction) => {
     const token = req.headers.authorization.substring(7);
     const jwt = await jwtVerify(token, config.key, config.options);
 
-    let userIdExtractor = DefaultUserIdExtractorBuilder("sub");
+    let userIdExtractor = DefaultUserIdExtractorBuilder("sub"); // default, extract user.id from jwt.sub claim
 
     if (typeof config.userIdExtractor === "string") {
       userIdExtractor = DefaultUserIdExtractorBuilder(config.userIdExtractor);
@@ -71,8 +72,26 @@ const middleware = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 
-function configureJwt(app: import("express").Application, config: VerifyConfig) {
-  app.set("cds-common-jwt-config", config);
+/**
+ * configure cds common jwt verify logic
+ * 
+ * @param app express app
+ * @param config 
+ * @returns app
+ * 
+ * @example
+ * ```ts
+ * cds.on("bootstrap", async (app) => {
+ *  configureJwt(app, {
+ *  key: await jose.importSPKI(publicKey, "PS256")
+ *  });
+ * });
+ * ```
+ * 
+ */
+function configureJwt(app: import("express").Application, config: CommonJwtConfig) {
+  // TODO: validate config
+  app.set(EXPRESS_APP_COMMON_JWT_CONFIG_KEY, config);
   return app;
 };
 
