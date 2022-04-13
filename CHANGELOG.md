@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.2](https://github.com/Soontao/cds-common-jwt-support/compare/v0.0.2-alpha.0...v0.0.2) (2022-04-13)
+
+
+### Bug Fixes
+
+* tenant broken ([3d78d4b](https://github.com/Soontao/cds-common-jwt-support/commit/3d78d4b401793cf46507c2b94bc2dc9db3be43e0))
+
 ### 0.0.2-alpha.0 (2022-02-22)
 
 
