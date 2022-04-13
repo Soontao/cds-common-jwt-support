@@ -1,4 +1,3 @@
-import { isPlainObject } from "@newdash/newdash/isPlainObject";
 import { RolesExtractor, TenantExtractor, UserIdExtractor } from "./interface";
 
 /**
@@ -14,7 +13,7 @@ export const DefaultRoleExtractor: RolesExtractor = (jwt) => {
         // @ts-ignore
         return jwt?.payload?.roles?.reduce?.((pre, cur) => { pre[cur] = true; return pre; }, {});
       }
-      if (isPlainObject(jwt.payload.roles)) {
+      if (jwt.payload.roles instanceof Object) {
         return jwt.payload.roles;
       }
       return {};
@@ -42,7 +41,7 @@ export const DefaultTenantExtractor: TenantExtractor = (jwt) => {
 export const DefaultUserIdExtractorBuilder = (key: string): UserIdExtractor => {
   return (jwt) => {
     const userId = jwt?.payload?.[key];
-    if(userId === undefined) {
+    if (userId === undefined) {
       return userId;
     }
     if (typeof userId === "string") {
