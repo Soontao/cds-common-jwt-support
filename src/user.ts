@@ -25,7 +25,7 @@ export class JwtUser extends cds.User {
 
   #attr: any = {};
 
-  #tenant: string = null;
+  public tenant: string;
 
   constructor(options: JwtUserOptions) {
     super(options.id);
@@ -41,19 +41,11 @@ export class JwtUser extends cds.User {
     }
     this.#roles["authenticated-user"] = true;
     if (typeof options.tenant === "string") {
-      this.#tenant = options.tenant;
+      this.tenant = options.tenant;
     }
     if (options.attr !== undefined) {
       this.#attr = options.attr;
     }
-  }
-
-  public get tenant() {
-    return this.#tenant;
-  }
-
-  public set tenant(val: any) {
-    this.#tenant = val;
   }
 
   public get _jwt() {
