@@ -16,7 +16,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [18.x]
         os: [ubuntu-latest]
 
     steps:
@@ -42,7 +42,7 @@ jobs:
       - name: npm install, build, and test
         run: |
           npm install
-          npm i --no-save @sap/cds@5 express sqlite3
+          npm i --no-save @sap/cds@6 express sqlite3
           npm run lint
         env:
           CI: true
