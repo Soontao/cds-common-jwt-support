@@ -1,5 +1,5 @@
 // @ts-ignore
-import cds from "@sap/cds/lib";
+import cds from "@sap/cds";
 import { baseConfig, buildAuthConfig } from "./shared";
 
 describe("CDS Common JWT Test Suite", () => {

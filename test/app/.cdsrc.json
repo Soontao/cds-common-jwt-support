@@ -3,8 +3,10 @@
     "auth": {
       "kind": "common-jwt"
     },
-    "common-jwt": {
-      "impl": "../../src/index.ts"
+    "kinds": {
+      "common-jwt": {
+        "impl": "../../src/index.ts"
+      }
     }
   }
 }

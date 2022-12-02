@@ -20,11 +20,10 @@
 npm i -S cds-common-jwt-support jose
 ```
 
-
 `server.js`
 
 
-```ts
+```js
 const cds = require("@sap/cds");
 const { configureJwt } = require("cds-common-jwt-support");
 const jose = require("jose")
@@ -53,8 +52,10 @@ module.exports = cds.server;
     "auth": {
       "kind": "common-jwt"
     },
-    "common-jwt": {
-      "impl": "cds-common-jwt-support"
+    "kinds": {
+      "common-jwt": {
+        "impl": "cds-common-jwt-support"
+      }
     }
   }
 }

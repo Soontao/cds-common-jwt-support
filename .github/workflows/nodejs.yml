@@ -44,7 +44,7 @@ jobs:
       - name: npm install, build, and test
         run: |
           npm install
-          npm i --no-save @sap/cds@6 express sqlite3
+          npm i --no-save @sap/cds@6 express sqlite3 axios
           npm run build --if-present
         env:
           CI: true

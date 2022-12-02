@@ -22,7 +22,7 @@ jobs:
       - name: npm install
         run: |
           npm install
-          npm i --no-save @sap/cds@6 express sqlite3
+          npm i --no-save @sap/cds@6 express sqlite3 axios
         env:
           CI: true
 

@@ -2,15 +2,14 @@
   "root": true,
   "parser": "@typescript-eslint/parser",
   "plugins": [
-    "@typescript-eslint",
-    "spellcheck"
+    "@typescript-eslint"
   ],
   "env": {
     "node": true,
     "es6": true
   },
   "parserOptions": {
-    "ecmaVersion": 2021,
+    "ecmaVersion": "latest",
     "sourceType": "module",
     "ecmaFeatures": {
       "impliedStrict": true,
@@ -77,27 +76,6 @@
       2,
       {
         "SwitchCase": 1
-      }
-    ],
-    "spellcheck/spell-checker": [
-      "warn",
-      {
-        "ignoreRequire": true,
-        // put false-positive words here
-        "skipWords": [
-          "javascript",
-          "req",
-          "nocheck",
-          "srv",
-          "evt",
-          "cds",
-          "camelcase",
-          "mutex",
-          "axios",
-          "jose",
-          "theo",
-          "alg"
-        ]
       }
     ]
   }

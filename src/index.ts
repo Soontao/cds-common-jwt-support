@@ -1,13 +1,14 @@
+import { cwdRequireCDS } from "cds-internal-tool";
 import type { NextFunction, Request, Response } from "express";
 import { errors, jwtVerify } from "jose";
 import { EXPRESS_APP_COMMON_JWT_CONFIG_KEY } from "./constants";
 import { UnauthorizedError } from "./errors";
 import { DefaultRoleExtractor, DefaultTenantExtractor, DefaultUserIdExtractorBuilder } from "./extractors";
 import { CommonJwtConfig } from "./interface";
-import { JwtUser } from "./user";
 
 
 const middleware = async (req: Request, res: Response, next: NextFunction) => {
+  const cds = cwdRequireCDS();
 
   try {
     const config: CommonJwtConfig = req?.app?.get(EXPRESS_APP_COMMON_JWT_CONFIG_KEY);
@@ -33,13 +34,17 @@ const middleware = async (req: Request, res: Response, next: NextFunction) => {
     }
 
     // @ts-ignore
-    req.user = new JwtUser({
+    req.user = new cds.User({
       id: userIdExtractor(jwt),
       jwt,
       req,
       attr: {},
       tenant: (config?.tenantExtractor ?? DefaultTenantExtractor)(jwt),
-      roles: (config?.roleExtractor ?? DefaultRoleExtractor)(jwt)
+      roles: {
+        ...(config?.roleExtractor ?? DefaultRoleExtractor)(jwt),
+        "identified-user": true,
+        "authenticated-user": true,
+      }
     });
 
     return next();
