@@ -20,37 +20,21 @@
 npm i -S cds-common-jwt-support jose
 ```
 
-`server.js`
-
-
-```js
-const cds = require("@sap/cds");
-const { configureJwt } = require("cds-common-jwt-support");
-const jose = require("jose")
-
-const publicKey = `
------BEGIN PUBLIC KEY-----
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA7g4mOYr136bOzOB4hd+e
-......
------END PUBLIC KEY-----
-`
-
-cds.on("bootstrap", async (app) => {
-  configureJwt(app, {
-    key: await jose.importSPKI(publicKey, "PS256")
-  });
-});
-
-module.exports = cds.server;
-```
-
 `package.json`
 
 ```json
 {
   "requires": {
     "auth": {
-      "kind": "common-jwt"
+      "kind": "common-jwt",
+      "credentials": {
+        "alg": "RS256",
+        "public": {
+          "spki": "-----BEGIN PUBLIC KEY-----......",
+          "x509": "X509 format public key",
+          "pkcs8": "PKCS8 format public key",
+        }
+      }
     },
     "kinds": {
       "common-jwt": {

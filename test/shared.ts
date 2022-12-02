@@ -22,19 +22,16 @@ export const createAuthToken = async (payload: jose.JWTPayload = { sub: "test-us
   return new jose
     .SignJWT(payload)
     .setIssuedAt()
-    .setProtectedHeader({ alg: "PS256" })
+    .setProtectedHeader({ alg: "RS256" })
     .setExpirationTime(Math.floor(Date.now() / 1000) + validity) // 60 seconds exp
     .sign(await getPrivateKey());
 };
 
 
-export const getPublicKey = async () => {
-  return await jose.importSPKI(
-    await fs.readFile(
-      path.join(__dirname, "./resources/publicKey.pem"),
-      { encoding: "utf-8" }
-    ),
-    "PS256"
+export const getPublicKey = () => {
+  return fs.readFile(
+    path.join(__dirname, "./resources/publicKey.pem"),
+    { encoding: "utf-8" }
   );
 };
 

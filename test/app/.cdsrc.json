@@ -1,7 +1,10 @@
 {
   "requires": {
     "auth": {
-      "kind": "common-jwt"
+      "kind": "common-jwt",
+      "credentials": {
+        "alg": "RS256"
+      }
     },
     "kinds": {
       "common-jwt": {

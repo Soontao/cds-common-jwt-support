@@ -1,9 +1,16 @@
-// @ts-ignore
+// @ts-nocheck
 import cds from "@sap/cds";
-import { baseConfig, buildAuthConfig } from "./shared";
+import { baseConfig, buildAuthConfig, getPublicKey } from "./shared";
 
 describe("CDS Common JWT Test Suite", () => {
 
+  beforeAll(async () => {
+    cds.env.requires["auth"].credentials = {
+      public: {
+        spki: await getPublicKey()
+      }
+    };
+  });
   const axios = cds.test(".").in(__dirname, "app");
 
   it("should could be started & reject request without token", async () => {
